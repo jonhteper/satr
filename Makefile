@@ -10,5 +10,8 @@ dev:
 	cp target/debug/satr ./package
 
 
+opt:
+	upx --best --lzma ./package/satr
+
 install:
 	cp ./package/satr /bin

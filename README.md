@@ -43,6 +43,12 @@ Compilar.
 make
 ```
 
+Reducir tamaño del binario (opcional).
+***Importante:** para este paso es necesario tener instalado [upx](https://github.com/upx/upx).*
+```
+make opt
+```
+
 Instalar (sistemas UNIX like).
 ```
 sudo make install
