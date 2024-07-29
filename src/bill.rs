@@ -42,6 +42,9 @@ pub struct Bill {
     #[serde(rename = "Receptor")]
     pub recipient: Recipient,
 
+    #[serde(rename = "Conceptos")]
+    pub concepts: Concepts,
+
     #[serde(rename = "Impuestos")]
     pub taxes: Taxes,
 }
@@ -110,6 +113,36 @@ pub struct Recipient {
 
     #[serde(rename = "@UsoCFDI")]
     pub cfdi_use: String,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct Concepts {
+    #[serde(rename = "Concepto")]
+    pub list: Vec<Concept>,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct Concept {
+    #[serde(rename = "@ClaveProdServ")]
+    pub key: String,
+
+    #[serde(rename = "@Cantidad")]
+    pub quantity: Decimal,
+
+    #[serde(rename = "@ClaveUnidad")]
+    pub unity_key: String,
+
+    #[serde(rename = "@Unidad")]
+    pub unity: String,
+
+    #[serde(rename = "@Descripcion")]
+    pub description: String,
+
+    #[serde(rename = "@ValorUnitario")]
+    pub unitary_price: Decimal,
+
+    #[serde(rename = "@Importe")]
+    pub value: Decimal,
 }
 
 #[derive(Debug, Deserialize)]
