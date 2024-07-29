@@ -1,6 +1,7 @@
 use crate::{
-    cli::{ReportType, Subject, SubjectType},
-    reporter::{Config, DateConfig, Reporter},
+    bill_extractor::{self, DateConfig},
+    cli::report::{ReportType, Subject, SubjectType},
+    reporter::{Config, Reporter},
 };
 
 pub struct ReporterFactory;
@@ -14,10 +15,12 @@ impl ReporterFactory {
             } => {
                 let args = report_type.args();
                 Config {
-                    subject_rfc: emisor_rfc,
-                    subject_type: SubjectType::Emisor,
-                    dates: DateConfig::from((args.date_start, args.date_end)),
                     report_type: ReportType::from(&report_type),
+                    extractor_config: bill_extractor::Config {
+                        subject_rfc: emisor_rfc,
+                        subject_type: SubjectType::Emisor,
+                        dates: DateConfig::from((args.date_start, args.date_end)),
+                    },
                 }
             }
             Subject::Receptor {
@@ -26,10 +29,12 @@ impl ReporterFactory {
             } => {
                 let args = report_type.args();
                 Config {
-                    subject_rfc: receptor_rfc,
-                    subject_type: SubjectType::Receptor,
-                    dates: DateConfig::from((args.date_start, args.date_end)),
                     report_type: ReportType::from(&report_type),
+                    extractor_config: bill_extractor::Config {
+                        subject_rfc: receptor_rfc,
+                        subject_type: SubjectType::Receptor,
+                        dates: DateConfig::from((args.date_start, args.date_end)),
+                    },
                 }
             }
         };
