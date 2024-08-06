@@ -958,7 +958,7 @@ dependencies = [
 
 [[package]]
 name = "satr"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "Lotus",
  "chrono",

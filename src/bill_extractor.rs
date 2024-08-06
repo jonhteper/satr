@@ -91,11 +91,14 @@ pub struct DateConfig {
 impl From<(Option<NaiveDate>, Option<NaiveDate>)> for DateConfig {
     fn from((start, end): (Option<NaiveDate>, Option<NaiveDate>)) -> Self {
         let date_start = start.unwrap_or_else(|| NaiveDate::from_ymd_opt(1900, 1, 1).unwrap());
-        let date_end = end.unwrap_or_else(|| Local::now().date_naive());
+        let date_end = match end {
+            Some(d) => NaiveDateTime::from(d),
+            None => Local::now().naive_local(),
+        };
 
         DateConfig {
             date_start: NaiveDateTime::from(date_start),
-            date_end: NaiveDateTime::from(date_end),
+            date_end,
         }
     }
 }
