@@ -43,7 +43,7 @@ impl ListSubCommand {
             self.date_end,
         );
 
-        BillExtractor::new(Cow::Owned(config))
+        BillExtractor::new(config.into())
     }
 
     #[inline]

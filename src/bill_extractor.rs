@@ -82,6 +82,18 @@ impl Config {
     }
 }
 
+impl From<Config> for Cow<'_, Config> {
+    fn from(config: Config) -> Self {
+        Cow::Owned(config)
+    }
+}
+
+impl<'a> From<&'a Config> for Cow<'a, Config> {
+    fn from(config: &'a Config) -> Self {
+        Cow::Borrowed(config)
+    }
+}
+
 #[derive(Debug, Clone, Copy)]
 pub struct DateConfig {
     pub date_start: NaiveDateTime,

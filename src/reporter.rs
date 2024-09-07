@@ -27,7 +27,7 @@ impl Reporter {
 
     pub fn money_report<P: AsRef<Path>>(&self, path: P) -> Result<Decimal, String> {
         let config = &self.config.extractor_config;
-        let extractor = BillExtractor::new(Cow::Borrowed(config));
+        let extractor = BillExtractor::new(config.into());
         let bills = extractor.extract_bills(path)?;
 
         let result = match self.config.report_type {
