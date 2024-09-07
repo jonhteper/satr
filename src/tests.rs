@@ -57,3 +57,20 @@ fn date_time_parse_works() {
 
     println!("{:?}", datetime);
 }
+
+#[test]
+fn bill_parsing_works() {
+    let path = assets_path();
+    let xmls = XmlExtractor::load_all_xmls(path).expect("Error al obtener XMLs");
+
+    println!("{}", xmls.len());
+
+    let mut bills_len = 0;
+    for xml in xmls {
+        let bill = Bill::from_xml_str(&xml).expect("Error al convertir XML");
+        dbg!(bill);
+        bills_len += 1;
+    }
+
+    assert!(bills_len >= 2);
+}
