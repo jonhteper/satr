@@ -1,4 +1,5 @@
 use std::{
+    error::Error,
     fs::File,
     io::{BufReader, Read},
     path::Path,
@@ -21,7 +22,8 @@ impl XmlExtractor {
             let file_name = entry.file_name().to_string_lossy();
 
             if file_name.ends_with(".xml") {
-                xmls.push(entry.path().to_string_lossy().to_string());
+                let xml_content = Self::extract_file(entry.path()).map_err(|e| e.to_string())?;
+                xmls.push(xml_content);
             }
 
             if file_name.ends_with(".zip") {
@@ -39,6 +41,14 @@ impl XmlExtractor {
         let xmls = archive.extract_xml_files()?;
 
         Ok(xmls)
+    }
+
+    fn extract_file<P: AsRef<Path>>(path: P) -> Result<String, Box<dyn Error>> {
+        let mut file = File::open(path)?;
+        let mut content = String::new();
+        file.read_to_string(&mut content)?;
+
+        Ok(content)
     }
 }
 
