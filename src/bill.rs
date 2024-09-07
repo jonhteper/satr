@@ -1,6 +1,7 @@
 use std::fmt::Display;
 
 use chrono::NaiveDateTime;
+use quick_xml::DeError;
 use rust_decimal::Decimal;
 use serde::Deserialize;
 
@@ -84,6 +85,10 @@ impl Bill {
         }
 
         total
+    }
+
+    pub fn from_xml_str(s: &str) -> Result<Self, DeError> {
+        quick_xml::de::from_str(s)
     }
 }
 

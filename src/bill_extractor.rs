@@ -52,7 +52,7 @@ impl<'a> BillExtractor<'a> {
 
         let iter = files_content
             .into_iter()
-            .map(|file| quick_xml::de::from_str(file.as_str()))
+            .map(|file| Bill::from_xml_str(file.as_str()))
             .filter_map(Result::ok)
             .filter_map(|b| self.filter(b));
 
